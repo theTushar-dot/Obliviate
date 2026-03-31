@@ -1,0 +1,230 @@
+% ------------------------------
+% FONT ENCODING & TYPOGRAPHY
+% ------------------------------
+\usepackage[T1]{fontenc}
+\usepackage{microtype}           % Microtypographic refinements
+\usepackage{nicefrac}            % Compact symbols for 1/2, etc.
+\usepackage{xspace}              % Smart spacing after macros
+% ------------------------------
+% MATHEMATICS
+% ------------------------------
+\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools, mathrsfs}
+\usepackage{dsfont}              % Double-stroke font
+\usepackage{fdsymbol}            % Additional math symbols
+
+% ------------------------------
+% TABLES & LISTS
+% ------------------------------
+\usepackage{booktabs}            % Professional-quality tables
+\usepackage{nicematrix}         % Even better sometimes
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{bigstrut}
+\usepackage{enumitem}            % Customized lists
+\setitemize{label=\textbullet, leftmargin=*, nolistsep}
+% ------------------------------
+% GRAPHICS & FIGURES
+% ------------------------------
+\usepackage{graphicx}
+\usepackage{adjustbox}           % Flexible box for figures/tables
+\usepackage{float}               % Precise float placement
+\usepackage{wrapfig}             % Wrapping figures
+\usepackage{subcaption}          % Recommended over subfig
+\captionsetup[sub]{justification=centering} % center subcaptions
+\expandafter\def\csname ver@subfig.sty\endcsname{}  % Avoid conflict with subcaption
+% ------------------------------
+% COLOR & EMOJIS SYMBOLS ICONS
+% ------------------------------
+\usepackage[dvipsnames]{xcolor}    % Extended color names
+\usepackage{color}
+\usepackage{fontawesome5}        % Icons
+\usepackage{pifont}              % Dingbats
+% ------------------------------
+% HYPERLINKS & REFERENCES
+% ------------------------------
+\usepackage{hyperref}            % Hyperlinks
+\hypersetup{colorlinks=true, citecolor=LightBlue}
+\usepackage[all]{hypcap}         % Fixes links to floats
+\usepackage{cleveref}            % Smart cross-referencing
+\usepackage{url}                 % For typesetting URLs
+% ------------------------------
+% ALGORITHMS
+% ------------------------------
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+% ------------------------------
+% TEXT DECORATION & MISC
+% ------------------------------
+\usepackage[normalem]{ulem}      % Underline, strikeout, etc.
+\usepackage{lipsum}              % Dummy text
+\usepackage{rotating}            % Rotated objects
+\usepackage{stackengine}         % Stack text and symbols
+\usepackage{caption}             % Caption customization
+\usepackage{listings}            % Code listings
+\usepackage{soul}                % Undeline (works with break lines)
+\usepackage{gradient-text}       % Gradient colored text
+% ------------------------------
+% GRAPHICS / DIAGRAMS
+% ------------------------------
+\usepackage{pgfplots}            % latex plots
+\pgfplotsset{compat=newest}
+\usepackage{pgfplotstable}       % for external data tables
+\usepackage{tikz}                % Drawing
+\usepackage{svg}                 % Include SVG graphics
+
+% ------------------------------
+% CITATIONS
+% ------------------------------
+\usepackage[comma,numbers,sort,compress]{natbib}
+\definecolor{demphcolor}{RGB}{125,125,125}    
+
+\hypersetup{
+    colorlinks = true,
+    citecolor = {YaleBlue},
+}
+\lstset{
+  breaklines=true,
+  basicstyle=\ttfamily\small,
+  frame=single
+}
+\setlength\parindent{0pt}
+
+% Custom colorbox style for PLAN Lab
+\tcbuselibrary{breakable, skins}
+\newtcolorbox{planbox}[1]{
+  enhanced,
+  breakable,
+  colback=white,
+  colframe=IllinoisOrange!80,
+  coltitle=IllinoisBlue,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  titlerule=0.8pt,
+  boxrule=1pt,
+  left=3mm, right=3mm, top=2mm, bottom=2mm,
+  boxsep=1mm,
+  before upper=\smallskip,
+}
+
+% Custom colorbox style for coloring text background
+\newcommand{\pcolorbox}[2]{%
+  \begingroup
+  \setlength{\fboxsep}{1pt}
+  \colorbox{#1}{#2}%
+  \endgroup
+}
+
+% --- Emphasized or colored text ---
+\newcommand{\new}[1]{\textcolor{purple}{{#1}}}          % New text highlight
+\newcommand{\todo}[1]{\textcolor{red}{{[$\blacksquare$ TODO: #1]}}} % TODO note
+\newcommand{\il}[1]{\textcolor{red}{{[IL: #1]}}}        % IL inline comment
+
+% --- Inline text macros ---
+\newcommand{\ie}{\textit{i.e.},\xspace}      % i.e.
+\newcommand{\eg}{\textit{e.g.},\xspace}      % e.g.
+\newcommand{\wo}{\textit{w/o}\xspace}       % without
+\newcommand{\etc}{\textit{etc}.\xspace}      % etc.
+\def\cf{\emph{c.f.}\ }                       % compare
+\def\vs{\emph{vs}.\ }                        % versus
+
+% --- Section, Equation, Figure, Table references ---
+\crefname{equation}{Eq.}{Eqs.}
+\crefformat{section}{\S#2#1#3}
+\crefformat{subsection}{\S#2#1#3}
+\crefformat{subsubsection}{\S#2#1#3}
+\crefrangeformat{section}{\S\S#3#1#4 to~#5#2#6}
+\crefmultiformat{section}{\S\S#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
+% --- Quotation helpers ---
+\newcommand{\dq}[1]{``#1''}                             % Double quotes
+\newcommand{\sq}[1]{`#1'}                               % Single quotes
+
+% --- Checkmark and crossmark (requires pifont) ---
+\newcommand{\cmark}{\textcolor{ForestGreen}{\ding{51}}}  % ✓
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}     % ✗
+
+% --- Math operators and expressions ---
+\DeclareMathOperator*{\E}{\mathbb{E}}                   % Expectation operator
+\newcommand{\norm}[2]{\left\| #1 \right\|_{#2}}         % Norm with subscript
+\newcommand{\abs}[1]{\left| #1 \right|}                 % Absolute value
+\newcommand{\innerprod}[2]{\left\langle #1, #2 \right\rangle} % Inner product
+\newcommand{\expect}[1]{\bb E\left[ #1 \right]}         % Expectation
+\newcommand{\prob}[1]{\bb P\left[ #1 \right]}           % Probability
+\newcommand{\set}[1]{\left\{ #1 \right\}}               % Set notation
+\newcommand{\condset}[2]{ \left\{ #1 \;\middle|\; #2 \right\} } % Conditional set
+\newcommand{\paren}[1]{\left( #1 \right)}               % Parentheses
+\newcommand{\brac}[1]{\left[ #1 \right]}                % Brackets
+\newcommand{\Brac}[1]{\left\{ #1 \right\}}              % Braces
+% --- Custom math font aliases ---
+\newcommand{\mb}{\mathbf}         % Bold
+\newcommand{\mc}{\mathcal}        % Calligraphic
+\newcommand{\mf}{\mathfrak}       % Fraktur
+\newcommand{\md}{\mathds}         % Double-stroke
+\newcommand{\bb}{\mathbb}         % Blackboard bold
+\newcommand{\msf}{\mathsf}        % Sans-serif
+\newcommand{\mcr}{\mathscr}       % Script
+% --- Common math sets ---
+\newcommand{\R}{\bb R}            % Real numbers
+\newcommand{\Z}{\bb Z}            % Integers
+\newcommand{\N}{\bb N}            % Naturals
+\newcommand{\Cp}{\bb C}           % Complex
+\newcommand{\Sp}{\bb S}           % Sphere
+\newcommand{\Ba}{\bb B}           % Ball
+\renewcommand{\P}{\mathbb{P}}     % Probability
+\newcommand{\indicator}[1]{\mathbbm{1}\left\{#1\right\}} % Indicator function
+\newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}} % Statistical independence symbol
+\newcommand{\proj}{\mathrm{proj}}                      % Projection
+\newcommand{\eps}{\varepsilon}                         % Epsilon
+\newcommand{\im}{\mathrm{i}}                           % Imaginary unit
+\newcommand{\e}{\mathrm{e}}                            % Euler's number
+\newcommand{\conv}{\circledast}                        % Convolution
+% --- Dataset notations ---
+\newcommand{\data}{\mathcal{D}}              % Dataset
+\newcommand{\rftdata}{\mathcal{D}^+_{\pi_\sft}}  % Fine-tuning positive set
+\newcommand{\dpodata}{\mathcal{D}^{\pm}_{\pi_\sft}} % DPO dataset
+\newcommand{\syndata}{\mathcal{D}_{\mathrm{syn}}}   % Synthetic data
+% --- Lowercase bold vectors ---
+\newcommand{\ba}{\mathbf{a}}          % Action vector
+\newcommand{\bd}{\mathbf{d}}          % Distance vector
+\newcommand{\be}{\mathbf{e}}          % Basis/error vector
+\newcommand{\bg}{\mathbf{g}}          % Gradient or generic vector
+\newcommand{\bh}{\mathbf{h}}          % Hidden vector
+\newcommand{\bo}{\mathbf{o}}          % Observation vector
+\newcommand{\bs}{\mathbf{s}}          % State vector
+\newcommand{\bu}{\mathbf{u}}          % Control vector
+\newcommand{\bv}{\mathbf{v}}          % Value vector
+\newcommand{\bw}{\mathbf{w}}          % Weight vector
+\newcommand{\bx}{\mathbf{x}}          % Input / feature vector
+\newcommand{\by}{\mathbf{y}}          % Ground-truth label
+\newcommand{\hatby}{\hat{\by}}        % Predicted y
+\newcommand{\bz}{\mathbf{z}}          % Latent vector
+% --- Uppercase bold matrices ---
+\newcommand{\bA}{\mathbf{A}}          % Matrix A
+\newcommand{\bD}{\mathbf{D}}          % Diagonal matrix
+\newcommand{\bG}{\mathbf{G}}          % Matrix G
+\newcommand{\bI}{\mathbf{I}}          % Identity matrix
+\newcommand{\bM}{\mathbf{M}}          % Matrix M
+\newcommand{\bN}{\mathbf{N}}          % Matrix N
+\newcommand{\bO}{\mathbf{O}}          % Matrix O
+\newcommand{\bP}{\mathbf{P}}          % Matrix P
+\newcommand{\bQ}{\mathbf{Q}}          % Matrix Q
+\newcommand{\bR}{\mathbf{R}}          % Matrix R
+\newcommand{\bS}{\mathbf{S}}          % Matrix S
+\newcommand{\bU}{\mathbf{U}}          % Matrix U
+\newcommand{\bV}{\mathbf{V}}          % Matrix V
+\newcommand{\bW}{\mathbf{W}}          % Matrix W
+% --- Divergences and metrics ---
+\newcommand{\loss}{\mathcal{L}}              % Loss function
+\newcommand{\kl}{D_\text{KL}}                % KL divergence
+\newcommand{\tv}{D_\text{TV}}                % Total variation distance
+\newcommand{\ent}{\mathcal{H}}               % Entropy
+\newcommand{\cosine}{\text{cos}}             % Cosine similarity
+% --- Symbols for transformations ---
+\newcommand{\tr}{^\mathrm{T}}               % Transpose
+\newcommand{\inv}{^{-1}}                    % Inverse
+\newcommand{\pinv}{^{\dagger}}              % Pseudoinverse
+\newcommand{\pr}{^\prime}                   % Prime
+\newcommand{\nth}{\text{th}}                % nth notation
+\newcommand{\wh}{\widehat}                  % Wide hat
+\newcommand{\wt}{\widetilde}                % Wide tilde
+\newcommand{\ol}{\overline}                 % Overline
