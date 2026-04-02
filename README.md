@@ -10,11 +10,11 @@ This repository contains the official source code for **Obliviate: Efficient Unl
 - **`train_MF.py`**  
   Trains the Matrix Factorization (MF) model with the BPR objective and saves the required triplets for the unlearning stage.
 
-- **`models.py`**  
-  Contains the model implementations for MF-BPR and LightGCN.
-
 - **`train_lightGCN.py`**  
   Trains the LightGCN model with the BPR objective and saves the triplets required for unlearning.
+
+- **`models.py`**  
+  Contains the model implementations for MF-BPR and LightGCN.
 
 - **`unlearning_main.py`**  
   Main end-to-end implementation of Obliviate, including both stages:  
