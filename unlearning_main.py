@@ -682,7 +682,7 @@ if __name__ == "__main__":
     # Stage 2 (LAC): train only adapters with joint loss
     adapters_to_train = [a for a in [emb_adapters.get('user'), emb_adapters.get('item')] if a is not None]
 
-    # Why not doing triplates, as main Idea of stage is giving 
+    # Why try both doing triplates or BCE, as main Idea of stage is giving 
     # the calibration which should improve generilzation not specific to triplates using in training.
 
     S_loader = DataLoader(InteractionDataset(S), batch_size=512, shuffle=True)
