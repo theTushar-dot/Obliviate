@@ -158,7 +158,7 @@ def grad_snapshot(model: nn.Module) -> Dict[nn.Parameter, torch.Tensor]:
 #     return gS
 
 
-# Using BPR triplate exact from noisey training
+# Using BPR triplets exact from noisey training
 def compute_deleted_gradient(
     model: nn.Module,
     S_loader: DataLoader,
@@ -602,6 +602,7 @@ if __name__ == "__main__":
     "verbose": False,
     "test_at": False}
 
+    start_time = time.time()
     model_saving_path = '/home/ubuntu/unlearning_rec_exps/dataset_prep/ml-1m_models'
     checkpoint = torch.load(model_saving_path + '/best_model_noisy_bpr_02.pth', weights_only=False)
     base = MF(n_users, n_items, config.emb_dim)
@@ -681,8 +682,8 @@ if __name__ == "__main__":
     # Stage 2 (LAC): train only adapters with joint loss
     adapters_to_train = [a for a in [emb_adapters.get('user'), emb_adapters.get('item')] if a is not None]
 
-    # Why try both doing triplates or BCE, as main Idea of stage is giving 
-    # the calibration which should improve generilzation not specific to triplates using in training.
+    # Why not doing triplets, as main Idea of stage is giving 
+    # the calibration which should improve generilzation not specific to triplets using in training.
 
     S_loader = DataLoader(InteractionDataset(S), batch_size=512, shuffle=True)
     Rloc_loader = DataLoader(InteractionDataset(R_local), batch_size=512, shuffle=True)
@@ -714,7 +715,11 @@ if __name__ == "__main__":
     use_autocast=False    
     )
     print(f"Pr[neg > del] after LAC:= {rate:.4f}")
+    end_time = time.time()
+    total_time = end_time - start_time
 
+    print(f"\nTotal execution time: {total_time:.2f} seconds")
+    print(f"Total execution time: {total_time/60:.2f} minutes")
         
     print("== Unlearned model ==")
     get_ranks(model, test_df, user_item_dict)

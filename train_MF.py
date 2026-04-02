@@ -9,7 +9,7 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import accuracy_score, f1_score
-from utils import recall_at_k, ndcg_k
+from utils import recall_at_k, ndcg_k, save_epoch_triples
 import random 
 import os
 import torch
@@ -170,28 +170,6 @@ class BPRTripletDataset(Dataset):
             torch.tensor(neg_item, dtype=torch.long),
         )
 
-
-def save_epoch_triples(dataset, save_path):
-    users = []
-    pos_items = []
-    neg_items = []
-
-    for idx in range(len(dataset)):
-        u, p, n = dataset[idx]
-        users.append(int(u.item()))
-        pos_items.append(int(p.item()))
-        neg_items.append(int(n.item()))
-
-    with open(save_path, "wb") as f:
-        pickle.dump(
-            {
-                "users": np.array(users, dtype=np.int64),
-                "pos_items": np.array(pos_items, dtype=np.int64),
-                "neg_items": np.array(neg_items, dtype=np.int64),
-            },
-            f,
-            protocol=pickle.HIGHEST_PROTOCOL,
-        )
 
 
 def get_acc_f1(test_df):

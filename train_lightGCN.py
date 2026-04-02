@@ -73,6 +73,10 @@ def BPR_train_original(dataset, model, opt, epoch, device, config):
     Items = torch.Tensor(S[:, 1]).long()
     labels = torch.Tensor(S[:, 2]).long()
 
+    triples_file = os.path.join(config['triples_saving_path'], f"triples_epoch_{epoch:03d}.pkl")
+    utils.save_epoch_triples_lightgcn(users, Items, labels, triples_file)
+
+
     users = users.to(device)
     Items = Items.to(device)
     labels = labels.to(device)
@@ -100,7 +104,7 @@ def BPR_train_original(dataset, model, opt, epoch, device, config):
         aver_loss += loss
         # print(f'BPRLoss/BPR', loss, epoch * int(len(users) / config['bpr_batch_size']) + batch_i)
     aver_loss = aver_loss / total_batch
-    return f"loss{aver_loss:.3f}"
+    return f"loss{aver_loss:.3f}", triples_file
 
 def get_ranks(model, test_df, train_user_dict, user_batch_size = 512):
 
@@ -152,7 +156,7 @@ def test_one_batch(X, topks):
             'ndcg':np.array(ndcg)}
         
             
-def Test(dataset, Recmodel, device, epoch, config, save_model = False, best_score = None, model_saving_path = None, optimizer = None):
+def Test(dataset, Recmodel, device, epoch, config, save_model = False, best_score = None, model_saving_path = None, optimizer = None, triplets = None):
     u_batch_size = config['test_u_batch_size']
     testDict = dataset.testDict
     # eval mode with no dropout
@@ -217,6 +221,7 @@ def Test(dataset, Recmodel, device, epoch, config, save_model = False, best_scor
                 'epoch': epoch,
                 'model_state_dict': Recmodel.state_dict(),
                 'best_score': new_best,
+                'triples_file': triplets,
                 'config': config
             }
             # include optimizer state if provided
@@ -272,6 +277,11 @@ if __name__ == "__main__":
     model_saving_path = dataset_name +'_models'
     os.makedirs(model_saving_path , exist_ok=True)
 
+    triples_saving_path = os.path.join(dataset_name, "all_epoch_triples")
+    os.makedirs(triples_saving_path, exist_ok=True)
+
+    config['triples_saving_path'] = triples_saving_path
+
     TRAIN_epochs = args.epochs 
     LOAD = args.load
     PATH = args.path
@@ -288,17 +298,20 @@ if __name__ == "__main__":
     best_score = 0.0
     for epoch in range(TRAIN_epochs):
 
-        if epoch %10 == 0:
+        output_information, triples_file = BPR_train_original(dataset, Recmodel, opt, epoch, device, config)
+
+        if epoch %5 == 0:
             print("[TEST]")
-            best_score = Test(dataset, Recmodel, device, epoch, config, True, best_score, model_saving_path, optimizer=opt)
-        output_information = BPR_train_original(dataset, Recmodel, opt, epoch, device, config)
+            best_score = Test(dataset, Recmodel, device, epoch, config, True, best_score, model_saving_path, optimizer=opt, triplets=triples_file)
 
         print(f'EPOCH[{epoch+1}/{TRAIN_epochs}] {output_information}')
         last_checkpoint = {
             'epoch': epoch,
             'model_state_dict': Recmodel.state_dict(),
             'optimizer_state_dict': opt.state_dict(),
+            'triples_file': triples_file,
             'config': config,
+
             'best_score': best_score
         }
         torch.save(last_checkpoint, os.path.join(model_saving_path, 'last_epoch_checkpoint.pth'))

@@ -6,6 +6,7 @@ from dataloader import BasicDataset
 from time import time
 from sklearn.metrics import roc_auc_score
 import random
+import pickle
 import os
 import math
 
@@ -220,6 +221,19 @@ class timer:
         else:
             self.tape.append(timer.time() - self.start)
 
+
+def save_epoch_triples_lightgcn(users, pos_items, neg_items, save_path):
+
+    with open(save_path, "wb") as f:
+        pickle.dump(
+            {
+                "users":  users.cpu().numpy().astype(np.int64),
+                "pos_items":  pos_items.cpu().numpy().astype(np.int64),
+                "neg_items":  neg_items.cpu().numpy().astype(np.int64),
+            },
+            f,
+            protocol=pickle.HIGHEST_PROTOCOL,
+        )
 
 # ====================Metrics==============================
 # =========================================================
