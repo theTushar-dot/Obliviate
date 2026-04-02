@@ -702,7 +702,7 @@ if __name__ == "__main__":
 
 
     train_LAC(model, adapters_to_train, S_loader, Rloc_loader, neg_sampler,
-            n_steps=250, lambda_loc=1.0, lambda_reg=1e-4, lr=1e-3, device = device, verbose=True)
+            n_steps=160, lambda_loc=1.0, lambda_reg=1e-4, lr=1e-3, device = device, verbose=True)
 
     rate = demotion_rate_streaming(
     model,
